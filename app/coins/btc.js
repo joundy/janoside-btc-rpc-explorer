@@ -131,7 +131,7 @@ module.exports = {
 	terminalHalvingCountByNetwork: {
 		"main": 32,
 		"test": 32,
-		"regtest": 32,
+		"regtest": 9999999,
 		"signet": 32
 	},
 
