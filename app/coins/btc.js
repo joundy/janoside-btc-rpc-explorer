@@ -6,7 +6,7 @@ const Decimal8 = Decimal.clone({ precision:8, rounding:8 });
 const btcFun = require("./btcFun.js");
 
 const blockRewardEras = [ new Decimal8(50) ];
-for (let i = 1; i < 34; i++) {
+for (let i = 1; i < 100; i++) {
 	let previous = blockRewardEras[i - 1];
 	blockRewardEras.push(new Decimal8(previous).dividedBy(2));
 }
@@ -566,6 +566,20 @@ module.exports = {
 		let halvingBlockInterval = (chain == "regtest" ? 150 : 210000);
 		let index = Math.floor(blockHeight / halvingBlockInterval);
 
-		return blockRewardEras[index];
+		let rewardEra = blockRewardEras[index];
+		if (rewardEra) {
+			return rewardEra;
+		}
+
+		let i = 1;
+		rewardEra = new Decimal8(50);
+		while (true) {
+			rewardEra = new Decimal8(rewardEra).dividedBy(2);
+			if (i === index) {
+				return rewardEra;
+			}
+			i++;
+		}
+
 	}
 };
