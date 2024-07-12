@@ -563,6 +563,10 @@ module.exports = {
 		}
 	},
 	blockRewardFunction:function(blockHeight, chain) {
+		if (blockHeight === undefined) {
+      			return 0;
+    		}
+
 		let halvingBlockInterval = (chain == "regtest" ? 150 : 210000);
 		let index = Math.floor(blockHeight / halvingBlockInterval);
 
@@ -575,7 +579,7 @@ module.exports = {
 		rewardEra = new Decimal8(50);
 		while (true) {
 			rewardEra = new Decimal8(rewardEra).dividedBy(2);
-			if (i === index) {
+			if (i >= index) {
 				return rewardEra;
 			}
 			i++;
