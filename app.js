@@ -434,7 +434,11 @@ function verifyRpcConnection() {
 			rpcApi.getRpcData("getnetworkinfo", true),
 			rpcApi.getRpcData("getblockchaininfo", true),
 		]).then(([ getnetworkinfo, getblockchaininfo ]) => {
-			global.activeBlockchain = getblockchaininfo.chain;
+			if(getblockchaininfo.chain === "easttestnet"){
+				global.activeBlockchain = "testnet";
+			} else {
+				global.activeBlockchain = getblockchaininfo.chain;
+			}
 
 			// we've verified rpc connection, no need to keep trying
 			clearInterval(global.verifyRpcConnectionIntervalId);
