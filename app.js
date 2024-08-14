@@ -434,10 +434,15 @@ function verifyRpcConnection() {
 			rpcApi.getRpcData("getnetworkinfo", true),
 			rpcApi.getRpcData("getblockchaininfo", true),
 		]).then(([ getnetworkinfo, getblockchaininfo ]) => {
-			if(getblockchaininfo.chain === "easttestnet"){
-				global.activeBlockchain = "testnet";
-			} else {
-				global.activeBlockchain = getblockchaininfo.chain;
+			switch (getblockchaininfo.chain) {
+				case "easttestnet":
+						global.activeBlockchain = "test";
+					break;
+				case "eastmainnet":
+						global.activeBlockchain = "main";
+					break;
+				default:
+					global.activeBlockchain = getblockchaininfo.chain
 			}
 
 			// we've verified rpc connection, no need to keep trying
